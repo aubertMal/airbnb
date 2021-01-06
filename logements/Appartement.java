@@ -1,0 +1,26 @@
+package aubert.airbnb.logements;
+
+import aubert.airbnb.utilisateurs.Hote;
+
+public class Appartement extends Logement{
+
+    private int numeroEtage;
+    private int superficieBalcon;
+
+    public Appartement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, int numEtage,int surfaceBalcon) {
+        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax);
+        numeroEtage = numEtage;
+        superficieBalcon=surfaceBalcon;
+    }
+
+    public int getSuperifcieTotal(){
+        return (getSuperficie()+superficieBalcon);
+    }
+
+    public void afficher(){
+        System.out.println(""+getHote());
+        System.out.println("Le séjour est dans un appartement situé à "+getAdresse()+" au"+(numeroEtage==0?" rez-de-chaussée":numeroEtage==1?numeroEtage+"er":numeroEtage+"ème"));
+        System.out.println("Superficie: " + getSuperficie() + "m².");
+        System.out.println("Balcon: " + (superficieBalcon>0?"Oui ( "+superficieBalcon+"m²)":"Non"));
+    }
+}
