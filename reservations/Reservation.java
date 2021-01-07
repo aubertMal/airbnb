@@ -19,6 +19,7 @@ public class Reservation {
         sejour = sejourReservation;
         voyageur = locataire;
         estValidee = validation;
+        dateDeReservation = new Date();
     }
 
     public void afficher(){

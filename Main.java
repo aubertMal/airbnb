@@ -3,16 +3,17 @@ package aubert.airbnb;
 import aubert.airbnb.logements.Appartement;
 import aubert.airbnb.logements.Maison;
 import aubert.airbnb.outils.MaDate;
-import aubert.airbnb.outils.Utile;
 import aubert.airbnb.reservations.Reservation;
-import aubert.airbnb.reservations.Sejour;
+import aubert.airbnb.reservations.SejourCourt;
+import aubert.airbnb.reservations.SejourLong;
 import aubert.airbnb.utilisateurs.Hote;
 import aubert.airbnb.utilisateurs.Voyageur;
-import java.util.Date;
 
 public class Main {
 
     public static void main(String[] args){
+        int dureeSejour = 10;
+
         Hote hote = new Hote("Peter","Bardu",28,2);
         Voyageur locataire = new Voyageur("Maxime", "Albert", 23);
 
@@ -26,16 +27,19 @@ public class Main {
 
         System.out.println(arrivee);
 
-        System.out.println("****Première réservation****");
-        Sejour sejour = new Sejour(arrivee,4, maison,4);
-        Reservation reservation = new Reservation(locataire, true, sejour);
-        reservation.afficher();
+        if (dureeSejour < 6) {
 
+            System.out.println("****Réservation court séjour****");
 
-        System.out.println("****Deuxième réservation****");
-        Sejour sejour2 = new Sejour(arrivee,4, appartement,4);
-        Reservation reservation2 = new Reservation(locataire, true, sejour2);
-        reservation2.afficher();
+            SejourCourt sejourCourt = new SejourCourt(arrivee, dureeSejour, maison, 4);
+            Reservation reservation = new Reservation(locataire, true, sejourCourt);
+            reservation.afficher();
+        } else {
+            System.out.println("****Réservation long séjour****");
+            SejourLong sejourlong = new SejourLong(arrivee, dureeSejour, appartement, 4);
+            Reservation reservation = new Reservation(locataire, true, sejourlong);
+            reservation.afficher();
+        }
 
     }
 }
