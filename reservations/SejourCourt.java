@@ -4,24 +4,26 @@ import aubert.airbnb.logements.Logement;
 import aubert.airbnb.outils.MaDate;
 
 public class SejourCourt extends Sejour implements ConditionsTarifiairesInterface{
-    private int tarif;
 
     public SejourCourt(MaDate date, int nuitees, Logement logementSejour, int nombreVoyageurs) {
         super(date, nuitees, logementSejour, nombreVoyageurs);
-        tarif = (logementSejour.getTarifParNuit())*nuitees;
+    }
+
+    @Override
+    public int miseAJourDuTarif() {
+        return super.logement.getTarifParNuit() * super.nbNuits;
     }
 
     public boolean beneficiePromotion(){
         return false;
     }
 
-    public int getTarif(){
-        return tarif;
+    public boolean verificationNombreDeNuits(){
+        return (super.nbNuits >= 1 && super.nbNuits <= 31);
     }
 
     @Override
     public void afficher(){
         super.afficher();
-        System.out.println(tarif + "€");
     }
 }

@@ -6,17 +6,19 @@ import aubert.airbnb.utilisateurs.Voyageur;
 
 import java.util.Date;
 
-public class Sejour implements SejourInterface{
+public abstract class Sejour implements SejourInterface{
     private MaDate dateArrivee;
-    private int nbNuits;
-    private Logement logement;
+    protected int nbNuits;
+    protected Logement logement;
     private int nbVoyageurs;
+    private int tarif;
 
     public Sejour(MaDate date,int nuitees, Logement logementSejour, int nombreVoyageurs){
         dateArrivee = date;
         nbNuits = nuitees;
         logement = logementSejour;
         nbVoyageurs = nombreVoyageurs;
+        tarif = miseAJourDuTarif();
     }
 
 
@@ -29,10 +31,6 @@ public class Sejour implements SejourInterface{
         return nbVoyageurs <= logement.getNbVoyageursMax() && nbVoyageurs > 0;
     }
 
-    public boolean verificationNombreDeNuits(){
-        return (nbNuits >= 1 && nbNuits <= 31);
-    }
-
     /**
      * Cette méthode prend en paramètres une date de séjour et vérifie si c'est après la date actuelle
      * @return true or false
@@ -41,11 +39,13 @@ public class Sejour implements SejourInterface{
         return dateArrivee.after(new Date());
     }
 
+    public abstract int miseAJourDuTarif();
+
     public void afficher(){
 
         logement.afficher();
         System.out.println("La date d'arrivée est le " + dateArrivee.toString(dateArrivee) + " pour " + nbNuits + " nuits.");
-        System.out.print("Le prix de ce séjour est de ");
+        System.out.print("Le prix de ce séjour est de " + tarif + " €");
     }
 }
 

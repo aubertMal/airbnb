@@ -21,7 +21,7 @@ public interface SejourInterface {
 
     static boolean verificationNombreDeVoyageurs(){
         return true;
-    };
+    }
 
     static void afficher(){
 
