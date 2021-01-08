@@ -2,8 +2,6 @@ package aubert.airbnb.reservations;
 
 import aubert.airbnb.logements.Logement;
 import aubert.airbnb.outils.MaDate;
-import aubert.airbnb.utilisateurs.Voyageur;
-
 import java.util.Date;
 
 public abstract class Sejour implements SejourInterface{

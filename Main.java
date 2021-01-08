@@ -41,6 +41,5 @@ public class Main {
 
         Reservation reservation = new Reservation(locataire, true, sejour);
         reservation.afficher();
-
     }
 }
