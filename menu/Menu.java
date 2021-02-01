@@ -129,23 +129,24 @@ public class Menu {
 
                 //enregistrer l'Hote
                 Node nodeHote = nNode.getFirstChild();
-                Element hoteElement = (Element) nodeHote;
+               // Element hoteElement = (Element) nodeHote;
 
-                Hote nouveauHote = new Hote(hoteElement.getAttribute("prenom"),
-                        hoteElement.getAttribute("nom"),
-                        Integer.parseInt(hoteElement.getAttribute("age")),
-                        Integer.parseInt(hoteElement.getAttribute("delaiResponse")));
+                Hote nouveauHote = new Hote(nodeHote.getAttributes().getNamedItem("prenom").getNodeValue(),
+                        nodeHote.getAttributes().getNamedItem("nom").getNodeValue(),
+                        Integer.parseInt(nodeHote.getAttributes().getNamedItem("age").getNodeValue()),
+                        Integer.parseInt(nodeHote.getAttributes().getNamedItem("delaiReponse").getNodeValue()));
                 nouveauHote.afficher();
 
                 Menu.listHotes.add(nouveauHote);
 
+                //Hote nouveauHote = new Hote("Peter", "Bardu", 28, 12);
                 //enregistrer le logement: récupérer les infos communes aux apparts et aux maisons
-                Element eElement = (Element) nNode;
-                String adresse = eElement.getAttribute("adresse");
 
-                int tarif = Integer.parseInt(eElement.getAttribute("tarifParNuit"));
-                int superficie = Integer.parseInt(eElement.getAttribute("superficie"));
-                int nbVoyageyrsMax = Integer.parseInt(eElement.getAttribute("nbVoyageyrsMax"));
+                String adresse = nNode.getAttributes().getNamedItem("adresse").getNodeValue();
+
+                int tarif = Integer.parseInt(nNode.getAttributes().getNamedItem("tarifParNuit").getNodeValue());
+                int superficie = Integer.parseInt(nNode.getAttributes().getNamedItem("superficie").getNodeValue());
+                int nbVoyageyrsMax = Integer.parseInt(nNode.getAttributes().getNamedItem("nbVoyageyrsMax").getNodeValue());
 
                 //enregistrer l'appartement
                 if (nNode.getNodeName() == "Appartement") {
@@ -155,8 +156,8 @@ public class Menu {
                             adresse,
                             superficie,
                             nbVoyageyrsMax,
-                            Integer.parseInt(eElement.getAttribute("numeroEtage")),
-                            Integer.parseInt(eElement.getAttribute("superificieBalcon")));
+                            Integer.parseInt(nNode.getAttributes().getNamedItem("numeroEtage").getNodeValue()),
+                            Integer.parseInt(nNode.getAttributes().getNamedItem("superificieBalcon").getNodeValue()));
 
                     Menu.listLogements.add(nouvelAppart);
                     nouvelAppart.afficher();
@@ -170,8 +171,8 @@ public class Menu {
                             adresse,
                             superficie,
                             nbVoyageyrsMax,
-                            Integer.parseInt(eElement.getAttribute("superficieJardin")),
-                            (eElement.getAttribute("possedePiscine")=="1")?true:false);
+                            Integer.parseInt(nNode.getAttributes().getNamedItem("superficieJardin").getNodeValue()),
+                            (nNode.getAttributes().getNamedItem("possedePiscine").getNodeValue()=="1")?true:false);
 
                     Menu.listLogements.add(nouvelleMaison);
                     nouvelleMaison.afficher();
