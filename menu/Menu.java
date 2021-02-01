@@ -104,12 +104,10 @@ public class Menu {
             doc.getDocumentElement().normalize();
             String root = doc.getDocumentElement().getNodeName();
 
-            NodeList nListAppartements = doc.getElementsByTagName("Appartement");
-            NodeList nListMaisons = doc.getElementsByTagName("Maison");
+            NodeList nListLogements = doc.getChildNodes();
 
-            //Enregistrer les Apparts
-            for (int idxAppart = 0; idxAppart< nListAppartements.getLength(); idxAppart++){
-                Node nNode = nListAppartements.item(idxAppart);
+            for (int idxLgmt = 0; idxLgmt< nListLogements.getLength(); idxLgmt++){
+                Node nNode = nListLogements.item(idxLgmt);
 
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
@@ -125,19 +123,46 @@ public class Menu {
 
                     Menu.listHotes.add(nouveauHote);
 
-                    //enregistrer l'appartement
+                    //enregistrer le logement: récupérer les infos communes aux apparts et aux maisons
                     Element eElement = (Element) nNode;
+                    String adresse = eElement.getAttribute("adresse");
 
-                    //(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, int numEtage,int surfaceBalcon)
-                    Appartement nouvelAppart = new Appartement(nouveauHote,
-                                                    Integer.parseInt(eElement.getAttribute("tarifParNuit")),
-                                                    eElement.getAttribute("adresse"),
-                                                    Integer.parseInt(eElement.getAttribute("superficie")),
-                                                    Integer.parseInt(eElement.getAttribute("nbVoyageyrsMax")),
-                                                    Integer.parseInt(eElement.getAttribute("numeroEtage")),
-                                                    Integer.parseInt(eElement.getAttribute("superificieBalcon")));
-                    Menu.listLogements.add(nouvelAppart);
-                    nouvelAppart.afficher();
+                    int tarif = Integer.parseInt(eElement.getAttribute("tarifParNuit"));
+                    int superficie = Integer.parseInt(eElement.getAttribute("superficie"));
+                    int nbVoyageyrsMax = Integer.parseInt(eElement.getAttribute("nbVoyageyrsMax"));
+
+                    //enregistrer l'appartement
+                    if (nNode.getNodeName() == "Appartement") {
+
+                        //(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, int numEtage,int surfaceBalcon)
+                        Appartement nouvelAppart = new Appartement(nouveauHote,
+                                tarif,
+                                adresse,
+                                superficie,
+                                nbVoyageyrsMax,
+                                Integer.parseInt(eElement.getAttribute("numeroEtage")),
+                                Integer.parseInt(eElement.getAttribute("superificieBalcon")));
+
+                        Menu.listLogements.add(nouvelAppart);
+                        nouvelAppart.afficher();
+                    }
+
+                    //enregistrer Maison
+                    if (nNode.getNodeName() == "Maison") {
+
+                        //(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax,
+                        // //int superficieDuJardin, boolean isPiscine)
+                        Maison nouvelleMaison = new Maison(nouveauHote,
+                                tarif,
+                                adresse,
+                                superficie,
+                                nbVoyageyrsMax,
+                                Integer.parseInt(eElement.getAttribute("superficieJardin")),
+                                (eElement.getAttribute("possedePiscine")=="1")?true:false);
+
+                        Menu.listLogements.add(nouvelleMaison);
+                        nouvelleMaison.afficher();
+                    }
                 }
 
             }
