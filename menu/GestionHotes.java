@@ -2,6 +2,8 @@ package aubert.airbnb.menu;
 
 import aubert.airbnb.utilisateurs.Hote;
 
+import java.util.InputMismatchException;
+
 public class GestionHotes {
     static void listerHotes(){
         for (int i = 0; i < 30 ; i++) {
@@ -33,24 +35,37 @@ public class GestionHotes {
     }
 }
 
-    private static void supprimerHote() {
+    private static void supprimerHote() throws IndexOutOfBoundsException, InputMismatchException {
+
+        System.out.println("-------------------------------------");
+        System.out.println("Supprimer un hôte");
+
+        System.out.println("Numéro ?");
+        int indice = Menu.scanner.nextInt();
+
+        Menu.listHotes.remove(indice);
+
+        listerHotes();
     }
+
 
     private static void ajouterHote() throws Exception{
 
-        System.out.println("Saisir le prénom de l'hôte : " );
-        String prenom=Menu.scanner.next();
+            System.out.println("Saisir le prénom de l'hôte : " );
+            String prenom=Menu.scanner.next();
 
-        System.out.println("Saisir le nom de l'hôte: ");
-        String nom=Menu.scanner.next();
+            System.out.println("Saisir le nom de l'hôte: ");
+            String nom=Menu.scanner.next();
 
-        System.out.println("Saisir l'âge de l'hôte: ");
-        int age = Menu.scanner.nextInt();
+            System.out.println("Saisir l'âge de l'hôte: ");
+            int age = Menu.scanner.nextInt();
 
-        System.out.println("Saisir le délai de réponse: ");
-        int delai = Menu.scanner.nextInt();
+            System.out.println("Saisir le délai de réponse: ");
+            int delai = Menu.scanner.nextInt();
 
-        Hote nouveauHote = new Hote(prenom, nom, age, delai);
-        System.out.println(nouveauHote);
-    }
+            Hote nouveauHote = new Hote(prenom, nom, age, delai);
+            Menu.listHotes.add(nouveauHote);
+
+            listerHotes();
+        }
     }
