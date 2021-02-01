@@ -103,14 +103,14 @@ public class Menu {
 
             //Rechercher les appartements
             NodeList nListAppartements = doc.getElementsByTagName("Appartement");
-            System.out.println("********" + nListAppartements.getLength());
+            System.out.println(nListAppartements.getLength() + "Appartements");
 
             if (nListAppartements.getLength()>1)
                 addElement(nListAppartements);
 
             //Rechercher les maisons
             NodeList nListMaisons = doc.getElementsByTagName("Maison");
-            System.out.println("********" + nListMaisons.getLength());
+            System.out.println(nListMaisons.getLength() + "Maisons");
 
             if (nListAppartements.getLength()>1)
                 addElement(nListMaisons);
@@ -122,42 +122,124 @@ public class Menu {
 
     private static void addElement(NodeList nList) {
 
+        //On boucle sur les logements
         for (int idxLgmt = 0; idxLgmt< nList.getLength(); idxLgmt++){
             Node nNode = nList.item(idxLgmt);
 
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                String tarif ="";
+                String adresse ="";
+                String superficie = "";
+                String nbVoyageursMax ="";
+                String numeroEtage = "";
+                String superificeBalcon = "";
+                String superficieJardin = "";
+                String possedePiscine = "";
+
+                String nom = "";
+                String prenom = "";
+                String age = "";
+                String delai = "";
+
+                //On boucle sur les infos d'un logement
+                NodeList infosLogement = nNode.getChildNodes();
+                for (int idxInfoLogement = 0; idxInfoLogement < infosLogement.getLength(); idxInfoLogement++) {
+                    //On parcourt les éléments d'un logement un par un
+                    Node nInfoLogement = infosLogement.item(idxInfoLogement);
+                    //Si c'est un élément on récupère l'info
+                    if (nInfoLogement.getNodeType() == Node.ELEMENT_NODE){
+                        //On regarde de quel élément il s'agit
+                        String nodeName = nInfoLogement.getNodeName();
+                        switch (nodeName){
+                            case "hote":
+                                //enregistrer l'Hote
+
+                                Node nodeHote = nNode.getFirstChild().getNextSibling();
+
+                                NodeList listInfos = nodeHote.getChildNodes();
+                                for (int i = 0; i < listInfos.getLength(); i++) {
+                                    Node infoNode = listInfos.item(i);
+                                    if (infoNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                                        switch (infoNode.getNodeName()) {
+                                            case "nom":
+                                                nom = infoNode.getTextContent();
+                                                break;
+                                            case "prenom":
+                                                prenom = infoNode.getTextContent();
+                                                break;
+                                            case "age":
+                                                age = infoNode.getTextContent();
+                                                break;
+                                            case "delaiReponse":
+                                                delai = infoNode.getTextContent();
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                break;
+
+                            case "tarifParNuit":
+                                tarif = nInfoLogement.getTextContent();
+                                break;
+
+                            case "adresse":
+                                adresse = nInfoLogement.getTextContent();
+                                break;
+
+                            case "superficie":
+                                superficie = nInfoLogement.getTextContent();
+                                break;
+
+                            case "nbVoyageursMax":
+                                nbVoyageursMax = nInfoLogement.getTextContent();
+                                break;
+
+                            case "numeroEtage":
+                                numeroEtage = nInfoLogement.getTextContent();
+                                break;
+
+                            case "superficieBalcon":
+                                superificeBalcon = nInfoLogement.getTextContent();
+                                break;
+
+                            case "superficieJardin":
+                                superficieJardin = nInfoLogement.getTextContent();
+                                break;
+
+                            case "possedePiscine":
+                                possedePiscine = nInfoLogement.getTextContent();
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                    }
+                }
 
                 //enregistrer l'Hote
-                Node nodeHote = nNode.getFirstChild();
-               // Element hoteElement = (Element) nodeHote;
-
-                Hote nouveauHote = new Hote(nodeHote.getAttributes().getNamedItem("prenom").getNodeValue(),
-                        nodeHote.getAttributes().getNamedItem("nom").getNodeValue(),
-                        Integer.parseInt(nodeHote.getAttributes().getNamedItem("age").getNodeValue()),
-                        Integer.parseInt(nodeHote.getAttributes().getNamedItem("delaiReponse").getNodeValue()));
+                Hote nouveauHote = new Hote(nom,
+                        prenom,
+                        Integer.parseInt(age),
+                        Integer.parseInt(delai));
                 nouveauHote.afficher();
 
                 Menu.listHotes.add(nouveauHote);
-
-                //Hote nouveauHote = new Hote("Peter", "Bardu", 28, 12);
-                //enregistrer le logement: récupérer les infos communes aux apparts et aux maisons
-
-                String adresse = nNode.getAttributes().getNamedItem("adresse").getNodeValue();
-
-                int tarif = Integer.parseInt(nNode.getAttributes().getNamedItem("tarifParNuit").getNodeValue());
-                int superficie = Integer.parseInt(nNode.getAttributes().getNamedItem("superficie").getNodeValue());
-                int nbVoyageyrsMax = Integer.parseInt(nNode.getAttributes().getNamedItem("nbVoyageyrsMax").getNodeValue());
 
                 //enregistrer l'appartement
                 if (nNode.getNodeName() == "Appartement") {
 
                     Appartement nouvelAppart = new Appartement(nouveauHote,
-                            tarif,
+                            Integer.parseInt(tarif),
                             adresse,
-                            superficie,
-                            nbVoyageyrsMax,
-                            Integer.parseInt(nNode.getAttributes().getNamedItem("numeroEtage").getNodeValue()),
-                            Integer.parseInt(nNode.getAttributes().getNamedItem("superificieBalcon").getNodeValue()));
+                            Integer.parseInt(superficie),
+                            Integer.parseInt(nbVoyageursMax),
+                            Integer.parseInt(numeroEtage),
+                            Integer.parseInt(superificeBalcon));
 
                     Menu.listLogements.add(nouvelAppart);
                     nouvelAppart.afficher();
@@ -167,12 +249,12 @@ public class Menu {
                 if (nNode.getNodeName() == "Maison") {
 
                     Maison nouvelleMaison = new Maison(nouveauHote,
-                            tarif,
+                            Integer.parseInt(tarif),
                             adresse,
-                            superficie,
-                            nbVoyageyrsMax,
-                            Integer.parseInt(nNode.getAttributes().getNamedItem("superficieJardin").getNodeValue()),
-                            (nNode.getAttributes().getNamedItem("possedePiscine").getNodeValue()=="1")?true:false);
+                            Integer.parseInt(superficie),
+                            Integer.parseInt(nbVoyageursMax),
+                            Integer.parseInt(superficieJardin),
+                            (possedePiscine=="1")?true:false);
 
                     Menu.listLogements.add(nouvelleMaison);
                     nouvelleMaison.afficher();
