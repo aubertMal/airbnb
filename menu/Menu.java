@@ -26,7 +26,7 @@ public class Menu {
     static ArrayList<Voyageur> listVoyageurs;
     static ArrayList<Reservation> listReservations;
 
-
+    static ArrayList listLogementsFromXml;
 
     public static void main(String[] args) {
         System.out.println("Bienvenue cher AirBnB");
@@ -234,8 +234,9 @@ public class Menu {
                         Integer.parseInt(delai));
                 nouveauHote.afficher();
 
-                Menu.listHotes.add(nouveauHote);
+                listHotes.add(nouveauHote);
 
+                String nomLogement = nNode.getAttributes().item(0).getTextContent();
                 //enregistrer l'appartement
                 if (nNode.getNodeName() == "Appartement") {
 
@@ -247,7 +248,8 @@ public class Menu {
                             Integer.parseInt(numeroEtage),
                             Integer.parseInt(superificeBalcon));
 
-                    Menu.listLogements.add(nouvelAppart);
+                    nouvelAppart.setNom(nomLogement);
+                    listLogements.add(nouvelAppart);
                     nouvelAppart.afficher();
                 }
 
@@ -262,7 +264,8 @@ public class Menu {
                             Integer.parseInt(superficieJardin),
                             (possedePiscine=="1")?true:false);
 
-                    Menu.listLogements.add(nouvelleMaison);
+                    nouvelleMaison.setNom(nomLogement);
+                    listLogements.add(nouvelleMaison);
                     nouvelleMaison.afficher();
                 }
             }

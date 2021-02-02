@@ -1,6 +1,7 @@
 package aubert.airbnb.menu;
 
 import aubert.airbnb.logements.Appartement;
+import aubert.airbnb.logements.Logement;
 import aubert.airbnb.logements.Maison;
 
 public class GestionLogements {
@@ -34,7 +35,8 @@ public class GestionLogements {
                     System.out.println("Saisir une Option");
                     System.out.println("1: Rechercher une Maison");
                     System.out.println("2: Rechercher un Appartement");
-                    System.out.println("3: Annuler");
+                    System.out.println("3: Rechercher un logement");
+                    System.out.println("4: Annuler");
                     int choix = Menu.scanner.nextInt();
                     System.out.println("Saisir le nom à rechercher");
                     String nomLogement = Menu.scanner.next();
@@ -56,6 +58,16 @@ public class GestionLogements {
                             }
                             break;
                         case 3:
+                            Logement logement = getLogementByName(nomLogement);
+                            if (logement!=null){
+                                logement.afficher();
+                            } else {
+                                System.out.println("Ce Logement n'existe pas");
+                            }
+                            break;
+                        case 4:
+                            break;
+                        default:
                             break;
                     }
                     break;
@@ -187,15 +199,15 @@ public class GestionLogements {
 
     private static Maison getMaisonByName(String nomMaison) {
 
-        Maison maison = (Maison) Menu.listLogements.get(0);
+        Maison maison = (Maison) Menu.listLogementsFromXml.get(0);
         Maison maisonTrouvee = null;
 
-        for (int idxMaison = 1; idxMaison < Menu.listLogements.size(); idxMaison++) {
+        for (int idxMaison = 1; idxMaison < Menu.listLogementsFromXml.size(); idxMaison++) {
             if (nomMaison.equals(maison.getName())){
                 maisonTrouvee = maison;
             }
             else {
-                maison = (Maison) Menu.listLogements.get(idxMaison);
+                maison = (Maison) Menu.listLogementsFromXml.get(idxMaison);
             }
         }
         return maisonTrouvee;
@@ -203,18 +215,34 @@ public class GestionLogements {
 
     private static Appartement getAppartementByName(String nomAppart) {
 
-        Appartement appart = (Appartement) Menu.listLogements.get(0);
+        Appartement appart = (Appartement) Menu.listLogementsFromXml.get(0);
         Appartement appartTrouve = null;
 
-        for (int idxAppart = 1; idxAppart < Menu.listLogements.size(); idxAppart++) {
+        for (int idxAppart = 1; idxAppart < Menu.listLogementsFromXml.size(); idxAppart++) {
             if (nomAppart.equals(appart.getName())){
                 appartTrouve = appart;
             }
             else {
-                appart = (Appartement) Menu.listLogements.get(idxAppart);
+                appart = (Appartement) Menu.listLogementsFromXml.get(idxAppart);
             }
         }
         return appartTrouve;
+    }
+
+    private static Logement getLogementByName(String nomLogement) {
+
+        Logement logement = (Logement) Menu.listLogementsFromXml.get(0);
+        Logement logementTrouve = null;
+
+        for (int idxLgmt = 1; idxLgmt < Menu.listLogementsFromXml.size(); idxLgmt++) {
+            if (nomLogement.equals(logement.getName())){
+                logementTrouve = logement;
+            }
+            else {
+                logement = (Logement) Menu.listLogementsFromXml.get(idxLgmt);
+            }
+        }
+        return logementTrouve;
     }
 
 }
