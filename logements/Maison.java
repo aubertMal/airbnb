@@ -24,4 +24,5 @@ public class Maison extends Logement{
         System.out.println("Jardin: " + (superficieJardin>0?"Oui ( "+superficieJardin+"m²)":"Non"));
         System.out.println("Piscine : " + (possedePiscine?"Oui":"Non"));
     }
+
 }

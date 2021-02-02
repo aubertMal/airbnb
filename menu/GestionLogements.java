@@ -18,7 +18,8 @@ public class GestionLogements {
         System.out.println("Saisir une option : ");
         System.out.println("1 : Ajouter un logement");
         System.out.println("2 : Supprimer un logement");
-        System.out.println("3 : Retour");
+        System.out.println("3 : Rechercher un logement");
+        System.out.println("4 : Retour");
 
         try {
 
@@ -30,6 +31,36 @@ public class GestionLogements {
                     supprimerLogement();
                     break;
                 case 3:
+                    System.out.println("Saisir une Option");
+                    System.out.println("1: Rechercher une Maison");
+                    System.out.println("2: Rechercher un Appartement");
+                    System.out.println("3: Annuler");
+                    int choix = Menu.scanner.nextInt();
+                    System.out.println("Saisir le nom à rechercher");
+                    String nomLogement = Menu.scanner.next();
+                    switch (choix){
+                        case 1:
+                            Maison maison = getMaisonByName(nomLogement);
+                            if (maison!=null){
+                                maison.afficher();
+                            } else {
+                                System.out.println("cette maison n'existe pas");
+                            }
+                            break;
+                        case 2:
+                            Appartement appart = getAppartementByName(nomLogement);
+                            if (appart!=null){
+                                appart.afficher();
+                            } else {
+                                System.out.println("Cet Appartement n'existe pas");
+                            }
+                            break;
+                        case 3:
+                            break;
+                    }
+                    break;
+
+                case 4:
                     Menu.listerMenu();
                     break;
             }
@@ -152,6 +183,38 @@ public class GestionLogements {
         System.out.println("Votre logement a été supprimé avec succès");
 
         listerLogements();
+    }
+
+    private static Maison getMaisonByName(String nomMaison) {
+
+        Maison maison = (Maison) Menu.listLogements.get(0);
+        Maison maisonTrouvee = null;
+
+        for (int idxMaison = 1; idxMaison < Menu.listLogements.size(); idxMaison++) {
+            if (nomMaison.equals(maison.getName())){
+                maisonTrouvee = maison;
+            }
+            else {
+                maison = (Maison) Menu.listLogements.get(idxMaison);
+            }
+        }
+        return maisonTrouvee;
+    }
+
+    private static Appartement getAppartementByName(String nomAppart) {
+
+        Appartement appart = (Appartement) Menu.listLogements.get(0);
+        Appartement appartTrouve = null;
+
+        for (int idxAppart = 1; idxAppart < Menu.listLogements.size(); idxAppart++) {
+            if (nomAppart.equals(appart.getName())){
+                appartTrouve = appart;
+            }
+            else {
+                appart = (Appartement) Menu.listLogements.get(idxAppart);
+            }
+        }
+        return appartTrouve;
     }
 
 }

@@ -9,6 +9,7 @@ public abstract class Logement {
     private String adresse;
     private int superficie;
     private int nbVoyageursMax;
+    private String nom;
 
     public Logement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement,int nombreVoyageursMax){
         hote = proprietaire;
@@ -36,6 +37,14 @@ public abstract class Logement {
 
     public int getNbVoyageursMax() {
         return nbVoyageursMax;
+    }
+
+    public String getName(){
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public abstract int getSuperifcieTotal();

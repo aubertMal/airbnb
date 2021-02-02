@@ -49,7 +49,7 @@ public class Menu {
                 break;
         }
 
-        //listerMenu();
+        listerMenu();
 
         scanner.close();
     }
@@ -77,6 +77,12 @@ public class Menu {
         Maison maison3 = new Maison(hote1, 60, "13 Rue de la Liberté, 62800 Liévin", 90, 4, 2000, true);
         Appartement appartement1 = new Appartement(hote1, 35, "46 Rue des Canonniers, 59800 Lille", 72, 2, 3, 20);
         Appartement appartement2 = new Appartement(hote1, 35, "111 Rue Colbert, 37000 Tours", 42, 2, 2, 0);
+
+        maison1.setNom("Maison1");
+        maison2.setNom("Maison2");
+        maison3.setNom("Maison3");
+        appartement1.setNom("Appartement1");
+        appartement2.setNom("Appartement2");
 
         listLogements.add(maison1);
         listLogements.add(maison2);
