@@ -4,11 +4,11 @@ import aubert.airbnb.utilisateurs.Hote;
 
 public class Appartement extends Logement{
 
-    private int numeroEtage;
-    private int superficieBalcon;
+    private final int numeroEtage;
+    private final int superficieBalcon;
 
-    public Appartement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, int numEtage,int surfaceBalcon) {
-        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax);
+    public Appartement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, String nomAppart, int numEtage,int surfaceBalcon) {
+        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax,nomAppart);
         numeroEtage = numEtage;
         superficieBalcon=surfaceBalcon;
     }

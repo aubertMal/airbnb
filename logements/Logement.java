@@ -1,22 +1,24 @@
 package aubert.airbnb.logements;
 
+import aubert.airbnb.outils.Comparable;
 import aubert.airbnb.utilisateurs.Hote;
 
 
-public abstract class Logement {
-    private Hote hote;
-    private int tarifParNuit;
-    private String adresse;
-    private int superficie;
-    private int nbVoyageursMax;
-    private String nom;
+public abstract class Logement implements Comparable {
+    private final Hote hote;
+    private final int tarifParNuit;
+    private final String adresse;
+    private final int superficie;
+    private final int nbVoyageursMax;
+    private final String nom;
 
-    public Logement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement,int nombreVoyageursMax){
+    public Logement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement,int nombreVoyageursMax,String nomLogement){
         hote = proprietaire;
         tarifParNuit = tarifNuit;
         adresse= adresseLogement;
         superficie = superficieLogement;
         nbVoyageursMax = nombreVoyageursMax;
+        nom = nomLogement;
     }
 
     public int getTarifParNuit(){
@@ -43,8 +45,9 @@ public abstract class Logement {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    @Override
+    public int getValueToCompare(){
+        return tarifParNuit;
     }
 
     public abstract int getSuperifcieTotal();

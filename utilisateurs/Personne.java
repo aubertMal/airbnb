@@ -1,9 +1,11 @@
 package aubert.airbnb.utilisateurs;
 
-public class Personne {
-    private String prenom;
-    private String nom;
-    private int age;
+import aubert.airbnb.outils.Comparable;
+
+public class Personne implements Comparable {
+    private final String prenom;
+    private final String nom;
+    private final int age;
 
     public Personne(String prenomPersonne, String nomPersonne, int agePersonne){
         this.prenom = prenomPersonne;
@@ -17,5 +19,10 @@ public class Personne {
     }
     public void afficher(){
         System.out.print(this);
+    }
+
+    @Override
+    public int getValueToCompare(){
+        return age;
     }
 }

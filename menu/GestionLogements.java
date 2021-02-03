@@ -24,7 +24,7 @@ public class GestionLogements {
 
         try {
 
-            switch (Menu.choix(3)) {
+            switch (Menu.choix(4)) {
                 case 1:
                     ajouterLogement();
                     break;
@@ -32,46 +32,33 @@ public class GestionLogements {
                     supprimerLogement();
                     break;
                 case 3:
-                    System.out.println("Saisir une Option");
-                    System.out.println("1: Rechercher une Maison");
+                    System.out.println("1: Rechercher une maison");
                     System.out.println("2: Rechercher un Appartement");
-                    System.out.println("3: Rechercher un logement");
-                    System.out.println("4: Annuler");
-                    int choix = Menu.scanner.nextInt();
+                    System.out.println("3: Annuler");
+                    int choixLogement = Menu.scanner.nextInt();
+
                     System.out.println("Saisir le nom à rechercher");
                     String nomLogement = Menu.scanner.next();
-                    switch (choix){
+
+                    switch (choixLogement){
                         case 1:
-                            Maison maison = getMaisonByName(nomLogement);
-                            if (maison!=null){
+                            Maison maison = getLogementByName(nomLogement);
+                            if (maison == null)
+                                System.out.println("Cette maison n'existe pas");
+                            else
                                 maison.afficher();
-                            } else {
-                                System.out.println("cette maison n'existe pas");
-                            }
                             break;
                         case 2:
-                            Appartement appart = getAppartementByName(nomLogement);
-                            if (appart!=null){
+                            Appartement appart = getLogementByName(nomLogement);
+                            if (appart == null)
+                                System.out.println("Cet appartement n'existe pas");
+                            else
                                 appart.afficher();
-                            } else {
-                                System.out.println("Cet Appartement n'existe pas");
-                            }
                             break;
                         case 3:
-                            Logement logement = getLogementByName(nomLogement);
-                            if (logement!=null){
-                                logement.afficher();
-                            } else {
-                                System.out.println("Ce Logement n'existe pas");
-                            }
-                            break;
-                        case 4:
-                            break;
-                        default:
                             break;
                     }
                     break;
-
                 case 4:
                     Menu.listerMenu();
                     break;
@@ -128,6 +115,8 @@ public class GestionLogements {
         int supperficie = Menu.scanner.nextInt();
         System.out.print("Nombre de voyageurs max : ");
         int nbVoyageur = Menu.scanner.nextInt();
+        System.out.print("Nom de la maison : ");
+        String nomMaison = Menu.scanner.next();
         System.out.print("Superficie du jardin : ");
         int superficieJardin = Menu.scanner.nextInt();
         System.out.print("Piscine (0 : non, 1 : oui) : ");
@@ -136,7 +125,7 @@ public class GestionLogements {
 
         Maison newMaison = new Maison(Menu.listHotes.get(numeroHote),
                 tarifJournalier, adresse, supperficie, nbVoyageur,
-                superficieJardin, possedePiscine);
+                nomMaison,superficieJardin, possedePiscine);
         Menu.listLogements.add(newMaison);
 
         System.out.println("Votre maison a été ajoutée avec succès");
@@ -165,6 +154,8 @@ public class GestionLogements {
         int supperficie = Menu.scanner.nextInt();
         System.out.print("Nombre de voyageurs max : ");
         int nbVoyageur = Menu.scanner.nextInt();
+        System.out.print("Nom de l'appartement : ");
+        String nomAppart = Menu.scanner.next();
         System.out.print("Superficie du balcon : ");
         int superficieBalcon = Menu.scanner.nextInt();
         System.out.print("Numéro de l'étage : ");
@@ -173,7 +164,7 @@ public class GestionLogements {
 
         Appartement newAppartement = new Appartement(
                 Menu.listHotes.get(numeroHote), tarifJournalier, adresse,
-                supperficie, nbVoyageur, numEtage, superficieBalcon);
+                supperficie, nbVoyageur, nomAppart,numEtage, superficieBalcon);
         Menu.listLogements.add(newAppartement);
 
         System.out.println("Votre appartement a été ajouté avec succès");
@@ -197,52 +188,14 @@ public class GestionLogements {
         listerLogements();
     }
 
-    private static Maison getMaisonByName(String nomMaison) {
+     static <T extends Logement> T getLogementByName(String nomLogement) {
 
-        Maison maison = (Maison) Menu.listLogementsFromXml.get(0);
-        Maison maisonTrouvee = null;
-
-        for (int idxMaison = 1; idxMaison < Menu.listLogementsFromXml.size(); idxMaison++) {
-            if (nomMaison.equals(maison.getName())){
-                maisonTrouvee = maison;
+            for (Logement logement : Menu.listLogements) {
+                if (logement.getName().equals(nomLogement)) {
+                    return (T) logement;
+                }
             }
-            else {
-                maison = (Maison) Menu.listLogementsFromXml.get(idxMaison);
-            }
-        }
-        return maisonTrouvee;
-    }
-
-    private static Appartement getAppartementByName(String nomAppart) {
-
-        Appartement appart = (Appartement) Menu.listLogementsFromXml.get(0);
-        Appartement appartTrouve = null;
-
-        for (int idxAppart = 1; idxAppart < Menu.listLogementsFromXml.size(); idxAppart++) {
-            if (nomAppart.equals(appart.getName())){
-                appartTrouve = appart;
-            }
-            else {
-                appart = (Appartement) Menu.listLogementsFromXml.get(idxAppart);
-            }
-        }
-        return appartTrouve;
-    }
-
-    private static Logement getLogementByName(String nomLogement) {
-
-        Logement logement = (Logement) Menu.listLogementsFromXml.get(0);
-        Logement logementTrouve = null;
-
-        for (int idxLgmt = 1; idxLgmt < Menu.listLogementsFromXml.size(); idxLgmt++) {
-            if (nomLogement.equals(logement.getName())){
-                logementTrouve = logement;
-            }
-            else {
-                logement = (Logement) Menu.listLogementsFromXml.get(idxLgmt);
-            }
-        }
-        return logementTrouve;
+            return null;
     }
 
 }

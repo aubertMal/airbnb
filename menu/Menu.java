@@ -26,8 +26,6 @@ public class Menu {
     static ArrayList<Voyageur> listVoyageurs;
     static ArrayList<Reservation> listReservations;
 
-    static ArrayList listLogementsFromXml;
-
     public static void main(String[] args) {
         System.out.println("Bienvenue cher AirBnB");
 
@@ -72,17 +70,11 @@ public class Menu {
         listHotes.add(hote4);
 
         // Création de Logement
-        Maison maison1 = new Maison(hote1, 40, "18 Bis rue Romain Rolland, 37230 Fondettes", 140, 2, 500, true);
-        Maison maison2 = new Maison(hote1, 35, "146 Rue George Sand, 59553 Cuincy", 120, 2, 200, false);
-        Maison maison3 = new Maison(hote1, 60, "13 Rue de la Liberté, 62800 Liévin", 90, 4, 2000, true);
-        Appartement appartement1 = new Appartement(hote1, 35, "46 Rue des Canonniers, 59800 Lille", 72, 2, 3, 20);
-        Appartement appartement2 = new Appartement(hote1, 35, "111 Rue Colbert, 37000 Tours", 42, 2, 2, 0);
-
-        maison1.setNom("Maison1");
-        maison2.setNom("Maison2");
-        maison3.setNom("Maison3");
-        appartement1.setNom("Appartement1");
-        appartement2.setNom("Appartement2");
+        Maison maison1 = new Maison(hote1, 40, "18 Bis rue Romain Rolland, 37230 Fondettes", 140, 2, "Maison1",500, true);
+        Maison maison2 = new Maison(hote1, 35, "146 Rue George Sand, 59553 Cuincy", 120, 2, "Maison2",200, false);
+        Maison maison3 = new Maison(hote1, 60, "13 Rue de la Liberté, 62800 Liévin", 90, 4, "Maison3", 2000, true);
+        Appartement appartement1 = new Appartement(hote1, 35, "46 Rue des Canonniers, 59800 Lille", 72, 2, "Appartement1", 3, 20);
+        Appartement appartement2 = new Appartement(hote1, 35, "111 Rue Colbert, 37000 Tours", 42, 2, "Appartement2",2, 0);
 
         listLogements.add(maison1);
         listLogements.add(maison2);
@@ -99,8 +91,8 @@ public class Menu {
     }
 
     private static void initFromXml(File xmlFile) {
-        listHotes = new ArrayList<>();
-        listLogements = new ArrayList<>();
+        listHotes = new ArrayList();
+        listLogements = new ArrayList();
 
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -245,10 +237,10 @@ public class Menu {
                             adresse,
                             Integer.parseInt(superficie),
                             Integer.parseInt(nbVoyageursMax),
+                            nomLogement,
                             Integer.parseInt(numeroEtage),
                             Integer.parseInt(superificeBalcon));
 
-                    nouvelAppart.setNom(nomLogement);
                     listLogements.add(nouvelAppart);
                     nouvelAppart.afficher();
                 }
@@ -261,10 +253,10 @@ public class Menu {
                             adresse,
                             Integer.parseInt(superficie),
                             Integer.parseInt(nbVoyageursMax),
+                            nomLogement,
                             Integer.parseInt(superficieJardin),
                             (possedePiscine=="1")?true:false);
 
-                    nouvelleMaison.setNom(nomLogement);
                     listLogements.add(nouvelleMaison);
                     nouvelleMaison.afficher();
                 }

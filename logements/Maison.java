@@ -4,11 +4,11 @@ import aubert.airbnb.utilisateurs.Hote;
 
 public class Maison extends Logement{
 
-    private int superficieJardin = 0;
-    private boolean possedePiscine = false;
+    private final int superficieJardin;
+    private final boolean possedePiscine;
 
-    public Maison(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, int superficieDuJardin, boolean isPiscine) {
-        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax);
+    public Maison(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, String nomMaison, int superficieDuJardin, boolean isPiscine) {
+        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax,nomMaison);
         superficieJardin = superficieDuJardin;
         possedePiscine = isPiscine;
     }

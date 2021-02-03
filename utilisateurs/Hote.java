@@ -1,8 +1,10 @@
 package aubert.airbnb.utilisateurs;
 
-public class Hote extends Personne{
+import aubert.airbnb.outils.Comparable;
 
-    private int delaiDeReponse;
+public class Hote extends Personne implements Comparable {
+
+    private final int delaiDeReponse;
 
     public Hote(String prenomPersonne, String nomPersonne, int agePersonne, int delai) {
         super(prenomPersonne, nomPersonne, agePersonne);
@@ -16,5 +18,10 @@ public class Hote extends Personne{
 
         super.afficher();
         System.out.println(" qui s'engage à répondre dans" + delaiAAfficher );
+    }
+
+    @Override
+    public int getValueToCompare(){
+        return delaiDeReponse;
     }
 }
