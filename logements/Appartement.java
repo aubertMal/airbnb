@@ -17,6 +17,10 @@ public class Appartement extends Logement{
         return (getSuperficie()+superficieBalcon);
     }
 
+    public boolean possedeBalcon(){
+        return superficieBalcon>0;
+    }
+
     public void afficher(){
         System.out.println(""+getHote());
         System.out.println("Le séjour est dans un appartement situé à "+getAdresse()+" au"+(numeroEtage==0?" rez-de-chaussée":numeroEtage==1?numeroEtage+"er":numeroEtage+"ème"));

@@ -22,7 +22,7 @@ public class Menu {
     static Scanner scanner;
     static File xmlFile = new File("C:/Workspace/logements.xml");
 
-    static AirBnBData airBnBData = AirBnBData.getInstance();
+    public static AirBnBData airBnBData = AirBnBData.getInstance();
 
     static ArrayList<Reservation> listReservations = new ArrayList<>();
 
@@ -72,11 +72,11 @@ public class Menu {
         airBnBData.setListHotes(listHotesTemp);
 
         // Création de Logement
-        Maison maison1 = new Maison(hote1, 40, "18 Bis rue Romain Rolland, 37230 Fondettes", 140, 2, "Maison1",500, true);
-        Maison maison2 = new Maison(hote1, 35, "146 Rue George Sand, 59553 Cuincy", 120, 2, "Maison2",200, false);
-        Maison maison3 = new Maison(hote1, 60, "13 Rue de la Liberté, 62800 Liévin", 90, 4, "Maison3", 2000, true);
+        Maison maison1 = new Maison(hote1, 40, "18 Bis rue Romain Rolland, 37230 Fondettes", 140, 5, "Maison1",500, true);
+        Maison maison2 = new Maison(hote1, 120, "146 Rue George Sand, 59553 Cuincy", 120, 2, "Maison2",200, false);
+        Maison maison3 = new Maison(hote1, 150, "13 Rue de la Liberté, 62800 Liévin", 90, 4, "Maison3", 2000, true);
         Appartement appartement1 = new Appartement(hote1, 35, "46 Rue des Canonniers, 59800 Lille", 72, 2, "Appartement1", 3, 20);
-        Appartement appartement2 = new Appartement(hote1, 35, "111 Rue Colbert, 37000 Tours", 42, 2, "Appartement2",2, 0);
+        Appartement appartement2 = new Appartement(hote1, 150, "111 Rue Colbert, 37000 Tours", 80, 5, "Appartement2",2, 20);
 
         listLogementsTemp.add(maison1);
         listLogementsTemp.add(maison2);

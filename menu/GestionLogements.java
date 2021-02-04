@@ -3,10 +3,18 @@ package aubert.airbnb.menu;
 import aubert.airbnb.logements.Appartement;
 import aubert.airbnb.logements.Logement;
 import aubert.airbnb.logements.Maison;
+import aubert.airbnb.utils.Search;
 
 import java.util.ArrayList;
 
 public class GestionLogements {
+
+    static Search.SearchBuilder searchBuilder = new Search.SearchBuilder(3)
+            .setPossedeJardin(false)
+            .setTarifMinParNuit(100)
+            .setPossedeBalcon(true)
+            .setTarifMaxParNuit(220);
+    static Search search = searchBuilder.build();
 
     static void listerLogements() {
 
@@ -34,28 +42,33 @@ public class GestionLogements {
                     supprimerLogement();
                     break;
                 case 3:
-                    System.out.println("1: Rechercher une maison");
-                    System.out.println("2: Rechercher un Appartement");
+                    System.out.println("1: Rechercher par nom");
+                    System.out.println("2: Rechercher par critères");
                     System.out.println("3: Annuler");
-                    int choixLogement = Menu.scanner.nextInt();
+                    int choixRecherche = Menu.scanner.nextInt();
 
-                    System.out.println("Saisir le nom à rechercher");
-                    String nomLogement = Menu.scanner.next();
-
-                    switch (choixLogement){
+                    switch (choixRecherche){
                         case 1:
-                            Maison maison = getLogementByName(nomLogement);
-                            if (maison == null)
-                                System.out.println("Cette maison n'existe pas");
+                            System.out.println("Saisir le nom à rechercher");
+                            String nomLogement = Menu.scanner.next();
+
+                            Logement logement = getLogementByName(nomLogement);
+                            if (logement == null)
+                                System.out.println("Ce logement n'existe pas");
                             else
-                                maison.afficher();
+                                logement.afficher();
                             break;
                         case 2:
-                            Appartement appart = getLogementByName(nomLogement);
-                            if (appart == null)
-                                System.out.println("Cet appartement n'existe pas");
+                            ArrayList<Logement> listRechercheLogements = rechercheLogementParCritere();
+                            if (listRechercheLogements.size()>0){
+                                for (Logement loge : listRechercheLogements) {
+                                    loge.afficher();
+                                }
+                            }
                             else
-                                appart.afficher();
+                            {
+                                System.out.println("Aucun logement ne répond à cette recherche");
+                            }
                             break;
                         case 3:
                             break;
@@ -67,10 +80,14 @@ public class GestionLogements {
             }
 
         } catch (Exception e) {
-            System.out.println("Une erreur est survenue");
+            System.out.println("Une erreur est survenue"+ e.getMessage());
             Menu.scanner.next();
             listerLogements();
         }
+    }
+
+    private static ArrayList<Logement> rechercheLogementParCritere() {
+        return search.result();
     }
 
     private static void ajouterLogement() throws Exception {

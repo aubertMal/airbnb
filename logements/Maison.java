@@ -17,6 +17,14 @@ public class Maison extends Logement{
         return (getSuperficie() + superficieJardin);
     }
 
+    public boolean getPossedePiscine(){
+        return possedePiscine;
+    }
+
+    public boolean possedeJardin(){
+        return superficieJardin>0;
+    }
+
     public void afficher(){
         System.out.println(""+getHote());
         System.out.println("Le séjour est dans une maison située à "+getAdresse());
