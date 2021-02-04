@@ -1,17 +1,16 @@
 package aubert.airbnb.reservations;
 
 import aubert.airbnb.logements.Logement;
-import aubert.airbnb.outils.MaDate;
 import java.util.Date;
 
 public abstract class Sejour implements SejourInterface{
-    private MaDate dateArrivee;
+    private Date dateArrivee;
     protected int nbNuits;
     protected Logement logement;
     private int nbVoyageurs;
     private int tarif;
 
-    public Sejour(MaDate date,int nuitees, Logement logementSejour, int nombreVoyageurs){
+    public Sejour(Date date,int nuitees, Logement logementSejour, int nombreVoyageurs){
         dateArrivee = date;
         nbNuits = nuitees;
         logement = logementSejour;
@@ -42,7 +41,7 @@ public abstract class Sejour implements SejourInterface{
     public void afficher(){
 
         logement.afficher();
-        System.out.println("La date d'arrivée est le " + dateArrivee.toString(dateArrivee) + " pour " + nbNuits + " nuits.");
+        System.out.println("La date d'arrivée est le " + dateArrivee + " pour " + nbNuits + " nuits.");
         System.out.print("Le prix de ce séjour est de " + tarif + " €");
     }
 }

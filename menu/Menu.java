@@ -24,7 +24,7 @@ public class Menu {
     static ArrayList<Hote> listHotes;
     static ArrayList<Logement> listLogements;
     static ArrayList<Voyageur> listVoyageurs;
-    static ArrayList<Reservation> listReservations;
+    static ArrayList<Reservation> listReservations = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println("Bienvenue cher AirBnB");
@@ -56,7 +56,6 @@ public class Menu {
         listHotes = new ArrayList<>();
         listLogements = new ArrayList<>();
         listVoyageurs = new ArrayList<>();
-        listReservations = new ArrayList<>();
 
         // Création des Hotes
         Hote hote1 = new Hote("Peter", "Bardu", 28, 12);

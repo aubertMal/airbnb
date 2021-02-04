@@ -3,12 +3,14 @@ package aubert.airbnb.reservations;
 import aubert.airbnb.logements.Logement;
 import aubert.airbnb.outils.MaDate;
 
+import java.util.Date;
+
 public class SejourLong extends Sejour implements ConditionsTarifiairesInterface{
 
     private final int PROMOTION_EN_POURCENTAGE = 20;
     private int promotion;
 
-    public SejourLong(MaDate date, int nuitees, Logement logementSejour, int nombreVoyageurs) {
+    public SejourLong(Date date, int nuitees, Logement logementSejour, int nombreVoyageurs) {
         super(date, nuitees, logementSejour, nombreVoyageurs);
     }
 

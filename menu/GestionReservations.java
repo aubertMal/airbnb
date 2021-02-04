@@ -1,6 +1,5 @@
 package aubert.airbnb.menu;
 
-import aubert.airbnb.outils.MaDate;
 import aubert.airbnb.reservations.Reservation;
 import aubert.airbnb.reservations.Sejour;
 import aubert.airbnb.reservations.SejourCourt;
@@ -10,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GestionReservations {
     static void listerReservations() {
@@ -77,7 +77,7 @@ public class GestionReservations {
 
         // Création d'un sejour
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        MaDate dateArrivee = (MaDate) simpleDateFormat.parse(strDate);
+        Date dateArrivee = simpleDateFormat.parse(strDate);
 
         Sejour sejour;
         if (nombreDeNuits > 5) {

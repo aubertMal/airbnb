@@ -3,9 +3,11 @@ package aubert.airbnb.reservations;
 import aubert.airbnb.logements.Logement;
 import aubert.airbnb.outils.MaDate;
 
+import java.util.Date;
+
 public class SejourCourt extends Sejour implements ConditionsTarifiairesInterface{
 
-    public SejourCourt(MaDate date, int nuitees, Logement logementSejour, int nombreVoyageurs) {
+    public SejourCourt(Date date, int nuitees, Logement logementSejour, int nombreVoyageurs) {
         super(date, nuitees, logementSejour, nombreVoyageurs);
     }
 
