@@ -4,6 +4,8 @@ import aubert.airbnb.logements.Appartement;
 import aubert.airbnb.logements.Logement;
 import aubert.airbnb.logements.Maison;
 
+import java.util.ArrayList;
+
 public class GestionLogements {
 
     static void listerLogements() {
@@ -11,9 +13,9 @@ public class GestionLogements {
         System.out.println("-------------------------------------");
         System.out.println("Liste des logements ");
 
-        for (int i = 0; i < Menu.listLogements.size(); i++) {
+        for (int i = 0; i < Menu.airBnBData.getListLogements().size(); i++) {
             System.out.print("Numéro " + i + " :");
-            Menu.listLogements.get(i).afficher();
+            Menu.airBnBData.getListLogements().get(i).afficher();
         }
 
         System.out.println("Saisir une option : ");
@@ -96,14 +98,16 @@ public class GestionLogements {
 
     private static void ajouterUneMaison() throws Exception {
 
+        ArrayList<Logement> listLogementsTemps = Menu.airBnBData.getListLogements();
+
         System.out.println("-------------------------------------");
         System.out.println("Ajouter une maison");
 
         System.out.println("Liste des hôtes : ");
 
-        for (int i = 0; i < Menu.listHotes.size(); i++) {
+        for (int i = 0; i < listLogementsTemps.size(); i++) {
             System.out.print("Numéro " + i + " :");
-            Menu.listHotes.get(i).afficher();
+            listLogementsTemps.get(i).afficher();
         }
         System.out.print("Numéro de l'hôte : ");
         int numeroHote = Menu.scanner.nextInt();
@@ -123,26 +127,29 @@ public class GestionLogements {
         boolean possedePiscine = Menu.scanner.nextInt() == 1;
         System.out.println();
 
-        Maison newMaison = new Maison(Menu.listHotes.get(numeroHote),
+        Maison newMaison = new Maison(Menu.airBnBData.getListHotes().get(numeroHote),
                 tarifJournalier, adresse, supperficie, nbVoyageur,
                 nomMaison,superficieJardin, possedePiscine);
-        Menu.listLogements.add(newMaison);
+        listLogementsTemps.add(newMaison);
 
         System.out.println("Votre maison a été ajoutée avec succès");
+
+        Menu.airBnBData.setListLogements(listLogementsTemps);
 
         listerLogements();
     }
 
     private static void ajouterUnAppartement() throws Exception {
+        ArrayList<Logement> listLogementsTemp = Menu.airBnBData.getListLogements();
 
         System.out.println("-------------------------------------");
         System.out.println("Ajouter un appartement");
 
         System.out.println("Liste des hôtes : ");
 
-        for (int i = 0; i < Menu.listHotes.size(); i++) {
+        for (int i = 0; i < Menu.airBnBData.getListHotes().size(); i++) {
             System.out.print("Numéro " + i + " :");
-            Menu.listHotes.get(i).afficher();
+            Menu.airBnBData.getListHotes().get(i).afficher();
         }
         System.out.print("Numéro de l'hôte : ");
         int numeroHote = Menu.scanner.nextInt();
@@ -163,16 +170,20 @@ public class GestionLogements {
         System.out.println();
 
         Appartement newAppartement = new Appartement(
-                Menu.listHotes.get(numeroHote), tarifJournalier, adresse,
+                Menu.airBnBData.getListHotes().get(numeroHote), tarifJournalier, adresse,
                 supperficie, nbVoyageur, nomAppart,numEtage, superficieBalcon);
-        Menu.listLogements.add(newAppartement);
+        listLogementsTemp.add(newAppartement);
 
         System.out.println("Votre appartement a été ajouté avec succès");
+
+        Menu.airBnBData.setListLogements(listLogementsTemp);
 
         listerLogements();
     }
 
     private static void supprimerLogement() throws Exception {
+
+        ArrayList<Logement> listLogementsTemp = Menu.airBnBData.getListLogements();
 
         System.out.println("-------------------------------------");
         System.out.println("Supprimer un hôte");
@@ -181,16 +192,17 @@ public class GestionLogements {
         int numero = Menu.scanner.nextInt();
         System.out.println();
 
-        Menu.listLogements.remove(numero);
+        listLogementsTemp.remove(numero);
 
         System.out.println("Votre logement a été supprimé avec succès");
 
+        Menu.airBnBData.setListLogements(listLogementsTemp);
         listerLogements();
     }
 
      static <T extends Logement> T getLogementByName(String nomLogement) {
 
-            for (Logement logement : Menu.listLogements) {
+            for (Logement logement : Menu.airBnBData.getListLogements()) {
                 if (logement.getName().equals(nomLogement)) {
                     return (T) logement;
                 }

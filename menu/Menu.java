@@ -5,6 +5,7 @@ import aubert.airbnb.logements.Maison;
 import aubert.airbnb.reservations.Reservation;
 import aubert.airbnb.utilisateurs.Hote;
 import aubert.airbnb.utilisateurs.Voyageur;
+import aubert.airbnb.utils.AirBnBData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,9 +22,8 @@ public class Menu {
     static Scanner scanner;
     static File xmlFile = new File("C:/Workspace/logements.xml");
 
-    static ArrayList<Hote> listHotes;
-    static ArrayList<Logement> listLogements;
-    static ArrayList<Voyageur> listVoyageurs;
+    static AirBnBData airBnBData = AirBnBData.getInstance();
+
     static ArrayList<Reservation> listReservations = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -53,9 +53,10 @@ public class Menu {
     }
 
     private static void init() {
-        listHotes = new ArrayList<>();
-        listLogements = new ArrayList<>();
-        listVoyageurs = new ArrayList<>();
+
+        ArrayList<Hote> listHotesTemp = new ArrayList<>();
+        ArrayList<Logement> listLogementsTemp = new ArrayList<>();
+        ArrayList<Voyageur> listVoyageursTemp = new ArrayList<>();
 
         // Création des Hotes
         Hote hote1 = new Hote("Peter", "Bardu", 28, 12);
@@ -63,10 +64,12 @@ public class Menu {
         Hote hote3 = new Hote("Jeanne", "Voisin", 26, 24);
         Hote hote4 = new Hote("Maurice", "Meunier", 46, 12);
 
-        listHotes.add(hote1);
-        listHotes.add(hote2);
-        listHotes.add(hote3);
-        listHotes.add(hote4);
+        listHotesTemp.add(hote1);
+        listHotesTemp.add(hote2);
+        listHotesTemp.add(hote3);
+        listHotesTemp.add(hote4);
+
+        airBnBData.setListHotes(listHotesTemp);
 
         // Création de Logement
         Maison maison1 = new Maison(hote1, 40, "18 Bis rue Romain Rolland, 37230 Fondettes", 140, 2, "Maison1",500, true);
@@ -75,23 +78,25 @@ public class Menu {
         Appartement appartement1 = new Appartement(hote1, 35, "46 Rue des Canonniers, 59800 Lille", 72, 2, "Appartement1", 3, 20);
         Appartement appartement2 = new Appartement(hote1, 35, "111 Rue Colbert, 37000 Tours", 42, 2, "Appartement2",2, 0);
 
-        listLogements.add(maison1);
-        listLogements.add(maison2);
-        listLogements.add(maison3);
-        listLogements.add(appartement1);
-        listLogements.add(appartement2);
+        listLogementsTemp.add(maison1);
+        listLogementsTemp.add(maison2);
+        listLogementsTemp.add(maison3);
+        listLogementsTemp.add(appartement1);
+        listLogementsTemp.add(appartement2);
+
+        airBnBData.setListLogements(listLogementsTemp);
 
         // Création de voyageurs
         Voyageur voyageur1 = new Voyageur("Alain", "Favre", 54);
         Voyageur voyageur2 = new Voyageur("Maxime", "Albert", 29);
 
-        listVoyageurs.add(voyageur1);
-        listVoyageurs.add(voyageur2);
+        listVoyageursTemp.add(voyageur1);
+        listVoyageursTemp.add(voyageur2);
+
+        airBnBData.setListVoyageurs(listVoyageursTemp);
     }
 
     private static void initFromXml(File xmlFile) {
-        listHotes = new ArrayList();
-        listLogements = new ArrayList();
 
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -118,6 +123,9 @@ public class Menu {
     }
 
     private static void addElement(NodeList nList) {
+
+        ArrayList<Hote> listHotesTemp = new ArrayList<>();
+        ArrayList<Logement> listLogementsTemp = new ArrayList<>();
 
         //On boucle sur les logements
         for (int idxLgmt = 0; idxLgmt< nList.getLength(); idxLgmt++){
@@ -225,7 +233,7 @@ public class Menu {
                         Integer.parseInt(delai));
                 nouveauHote.afficher();
 
-                listHotes.add(nouveauHote);
+                listHotesTemp.add(nouveauHote);
 
                 String nomLogement = nNode.getAttributes().item(0).getTextContent();
                 //enregistrer l'appartement
@@ -240,7 +248,7 @@ public class Menu {
                             Integer.parseInt(numeroEtage),
                             Integer.parseInt(superificeBalcon));
 
-                    listLogements.add(nouvelAppart);
+                    listLogementsTemp.add(nouvelAppart);
                     nouvelAppart.afficher();
                 }
 
@@ -256,12 +264,15 @@ public class Menu {
                             Integer.parseInt(superficieJardin),
                             (possedePiscine=="1")?true:false);
 
-                    listLogements.add(nouvelleMaison);
+                    listLogementsTemp.add(nouvelleMaison);
                     nouvelleMaison.afficher();
                 }
             }
 
         }
+
+        airBnBData.setListLogements(listLogementsTemp);
+        airBnBData.setListHotes(listHotesTemp);
     }
 
     static void listerMenu(){

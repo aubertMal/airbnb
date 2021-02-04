@@ -2,15 +2,17 @@ package aubert.airbnb.menu;
 
 import aubert.airbnb.utilisateurs.Voyageur;
 
+import java.util.ArrayList;
+
 public class GestionVoyageurs {
     static void listerVoyageurs() {
 
         System.out.println("-------------------------------------");
         System.out.println("Liste des voyageurs ");
 
-        for (int i = 0; i < Menu.listVoyageurs.size(); i++) {
+        for (int i = 0; i < Menu.airBnBData.getListVoyageurs().size(); i++) {
             System.out.print("Numéro " + i + " :");
-            Menu.listVoyageurs.get(i).afficher();
+            Menu.airBnBData.getListVoyageurs().get(i).afficher();
             System.out.println();
         }
 
@@ -40,6 +42,8 @@ public class GestionVoyageurs {
 
     private static void ajouterVoyageur() throws Exception {
 
+        ArrayList<Voyageur> listVoyageurTemp = Menu.airBnBData.getListVoyageurs();
+
         System.out.println("-------------------------------------");
         System.out.println("Ajouter un nouvel hôte");
 
@@ -52,14 +56,18 @@ public class GestionVoyageurs {
         System.out.println();
 
         Voyageur newVoyageur = new Voyageur(prenom, nom, age);
-        Menu.listVoyageurs.add(newVoyageur);
+        listVoyageurTemp.add(newVoyageur);
 
         System.out.println("Votre voyageur a été ajouté avec succès");
+
+        Menu.airBnBData.setListVoyageurs(listVoyageurTemp);
 
         listerVoyageurs();
     }
 
     private static void supprimerVoyageur() throws Exception {
+
+        ArrayList<Voyageur> listVoyageurTemp= Menu.airBnBData.getListVoyageurs();
 
         System.out.println("-------------------------------------");
         System.out.println("Supprimer un voyageur");
@@ -68,10 +76,11 @@ public class GestionVoyageurs {
         int numero = Menu.scanner.nextInt();
         System.out.println();
 
-        Menu.listVoyageurs.remove(numero);
+        listVoyageurTemp.remove(numero);
 
         System.out.println("Votre voyageur a été supprimé avec succès");
 
+        Menu.airBnBData.setListVoyageurs(listVoyageurTemp);
         listerVoyageurs();
     }
 }

@@ -2,9 +2,11 @@ package aubert.airbnb.menu;
 
 import aubert.airbnb.utilisateurs.Hote;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class GestionHotes {
+
     static void listerHotes(){
         for (int i = 0; i < 30 ; i++) {
             System.out.print("-");
@@ -43,7 +45,9 @@ public class GestionHotes {
         System.out.println("Numéro ?");
         int indice = Menu.scanner.nextInt();
 
-        Menu.listHotes.remove(indice);
+        ArrayList<Hote> listHotestemp = Menu.airBnBData.getListHotes();
+        listHotestemp.remove(indice);
+        Menu.airBnBData.setListHotes(listHotestemp);
 
         listerHotes();
     }
@@ -64,7 +68,10 @@ public class GestionHotes {
             int delai = Menu.scanner.nextInt();
 
             Hote nouveauHote = new Hote(prenom, nom, age, delai);
-            Menu.listHotes.add(nouveauHote);
+
+            ArrayList<Hote> listHotestemp = Menu.airBnBData.getListHotes();
+            listHotestemp.add(nouveauHote);
+            Menu.airBnBData.setListHotes(listHotestemp);
 
             listerHotes();
         }

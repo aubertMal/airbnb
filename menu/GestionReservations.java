@@ -1,9 +1,6 @@
 package aubert.airbnb.menu;
 
-import aubert.airbnb.reservations.Reservation;
-import aubert.airbnb.reservations.Sejour;
-import aubert.airbnb.reservations.SejourCourt;
-import aubert.airbnb.reservations.SejourLong;
+import aubert.airbnb.reservations.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -53,9 +50,9 @@ public class GestionReservations {
 
         System.out.println("Liste des voyageurs : ");
 
-        for (int i = 0; i < Menu.listVoyageurs.size(); i++) {
+        for (int i = 0; i < Menu.airBnBData.getListVoyageurs().size(); i++) {
             System.out.print("Numéro " + i + " : ");
-            Menu.listVoyageurs.get(i).afficher();
+            Menu.airBnBData.getListVoyageurs().get(i).afficher();
             System.out.println();
         }
         System.out.print("Numéro du voyageur : ");
@@ -66,9 +63,9 @@ public class GestionReservations {
         int nombreDeNuits = Menu.scanner.nextInt();
         System.out.println("Liste des logements : ");
 
-        for (int i = 0; i < Menu.listLogements.size(); i++) {
+        for (int i = 0; i < Menu.airBnBData.getListLogements().size(); i++) {
             System.out.print("Numéro " + i + " : ");
-            Menu.listLogements.get(i).afficher();
+            Menu.airBnBData.getListLogements().get(i).afficher();
         }
         System.out.print("Numéro du logement : ");
         int numeroLogement = Menu.scanner.nextInt();
@@ -79,16 +76,9 @@ public class GestionReservations {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date dateArrivee = simpleDateFormat.parse(strDate);
 
-        Sejour sejour;
-        if (nombreDeNuits > 5) {
-            sejour = new SejourLong(dateArrivee, nombreDeNuits, Menu.listLogements.get(numeroLogement),
-                    nombreDePersonnes);
-        } else {
-            sejour = new SejourCourt(dateArrivee, nombreDeNuits, Menu.listLogements.get(numeroLogement),
-                    nombreDePersonnes);
-        }
+        Sejour sejour = SejourFactory.getSejour(dateArrivee, Menu.airBnBData.getListLogements().get(numeroLogement),nombreDeNuits, nombreDePersonnes);
 
-        Reservation newReservation = new Reservation(Menu.listVoyageurs.get(numeroVoyageur),false,sejour);
+        Reservation newReservation = new Reservation(Menu.airBnBData.getListVoyageurs().get(numeroVoyageur),false,sejour);
         Menu.listReservations.add(newReservation);
 
         System.out.println("Votre réservation a été ajoutée avec succès");

@@ -3,10 +3,7 @@ package aubert.airbnb;
 import aubert.airbnb.logements.Appartement;
 import aubert.airbnb.logements.Maison;
 import aubert.airbnb.outils.MaDate;
-import aubert.airbnb.reservations.Reservation;
-import aubert.airbnb.reservations.Sejour;
-import aubert.airbnb.reservations.SejourCourt;
-import aubert.airbnb.reservations.SejourLong;
+import aubert.airbnb.reservations.*;
 import aubert.airbnb.utilisateurs.Hote;
 import aubert.airbnb.utilisateurs.Voyageur;
 
@@ -29,15 +26,7 @@ public class Main {
 
         System.out.println(arrivee);
 
-        if (dureeSejour < 6) {
-
-            System.out.println("****Réservation court séjour****");
-            sejour = new SejourCourt(arrivee, dureeSejour, maison, 4);
-
-        } else {
-            System.out.println("****Réservation long séjour****");
-            sejour = new SejourLong(arrivee, dureeSejour, appartement, 4);
-        }
+        sejour = SejourFactory.getSejour(arrivee, maison, dureeSejour,4);
 
         Reservation reservation = new Reservation(locataire, true, sejour);
         reservation.afficher();
