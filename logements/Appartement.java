@@ -7,8 +7,8 @@ public class Appartement extends Logement{
     private final int numeroEtage;
     private final int superficieBalcon;
 
-    public Appartement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, String nomAppart, int numEtage,int surfaceBalcon) {
-        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax,nomAppart);
+    public Appartement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, int numEtage,int surfaceBalcon) {
+        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax);
         numeroEtage = numEtage;
         superficieBalcon=surfaceBalcon;
     }

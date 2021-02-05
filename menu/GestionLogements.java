@@ -144,7 +144,7 @@ public class GestionLogements {
 
         Maison newMaison = new Maison(Menu.airBnBData.getListHotes().get(numeroHote),
                 tarifJournalier, adresse, supperficie, nbVoyageur,
-                nomMaison,superficieJardin, possedePiscine);
+                superficieJardin, possedePiscine);
         listLogementsTemps.add(newMaison);
 
         System.out.println("Votre maison a été ajoutée avec succès");
@@ -186,7 +186,7 @@ public class GestionLogements {
 
         Appartement newAppartement = new Appartement(
                 Menu.airBnBData.getListHotes().get(numeroHote), tarifJournalier, adresse,
-                supperficie, nbVoyageur, nomAppart,numEtage, superficieBalcon);
+                supperficie, nbVoyageur,numEtage, superficieBalcon);
         listLogementsTemp.add(newAppartement);
 
         System.out.println("Votre appartement a été ajouté avec succès");

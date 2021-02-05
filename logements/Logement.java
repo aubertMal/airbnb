@@ -5,20 +5,19 @@ import aubert.airbnb.utilisateurs.Hote;
 
 
 public abstract class Logement implements Comparable {
+    private String nom;
     private final Hote hote;
     private final int tarifParNuit;
     private final String adresse;
     private final int superficie;
     private final int nbVoyageursMax;
-    private final String nom;
 
-    public Logement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement,int nombreVoyageursMax,String nomLogement){
+    public Logement(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement,int nombreVoyageursMax){
         hote = proprietaire;
         tarifParNuit = tarifNuit;
         adresse= adresseLogement;
         superficie = superficieLogement;
         nbVoyageursMax = nombreVoyageursMax;
-        nom = nomLogement;
     }
 
     public int getTarifParNuit(){
@@ -43,6 +42,10 @@ public abstract class Logement implements Comparable {
 
     public String getName(){
         return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     @Override

@@ -7,8 +7,8 @@ public class Maison extends Logement{
     private final int superficieJardin;
     private final boolean possedePiscine;
 
-    public Maison(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, String nomMaison, int superficieDuJardin, boolean isPiscine) {
-        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax,nomMaison);
+    public Maison(Hote proprietaire, int tarifNuit, String adresseLogement, int superficieLogement, int nombreVoyageursMax, int superficieDuJardin, boolean isPiscine) {
+        super(proprietaire, tarifNuit, adresseLogement, superficieLogement, nombreVoyageursMax);
         superficieJardin = superficieDuJardin;
         possedePiscine = isPiscine;
     }
