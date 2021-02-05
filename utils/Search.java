@@ -6,6 +6,7 @@ import aubert.airbnb.logements.Maison;
 import aubert.airbnb.menu.Menu;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,6 +36,7 @@ public class Search {
                 .filter(predicateTarif())
                 .filter(predicatePiscine())
                 .filter(predicateBalcon())
+                .sorted(Comparator.comparingInt(Logement::getTarifParNuit))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 

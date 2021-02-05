@@ -77,7 +77,7 @@ public class Menu {
         Maison maison1 = new Maison(hote1, 40, "18 Bis rue Romain Rolland, 37230 Fondettes", 140, 5, "Maison1",500, true);
         Maison maison2 = new Maison(hote1, 120, "146 Rue George Sand, 59553 Cuincy", 120, 2, "Maison2",200, false);
         Maison maison3 = new Maison(hote1, 150, "13 Rue de la Liberté, 62800 Liévin", 90, 4, "Maison3", 2000, true);
-        Appartement appartement1 = new Appartement(hote1, 35, "46 Rue des Canonniers, 59800 Lille", 72, 2, "Appartement1", 3, 20);
+        Appartement appartement1 = new Appartement(hote1, 180, "46 Rue des Canonniers, 59800 Lille", 72, 6, "Appartement1", 3, 20);
         Appartement appartement2 = new Appartement(hote1, 150, "111 Rue Colbert, 37000 Tours", 80, 5, "Appartement2",2, 20);
 
         listLogementsTemp.add(maison1);

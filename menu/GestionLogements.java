@@ -61,9 +61,7 @@ public class GestionLogements {
                         case 2:
                             ArrayList<Logement> listRechercheLogements = rechercheLogementParCritere();
                             if (listRechercheLogements.size()>0){
-                                for (Logement loge : listRechercheLogements) {
-                                    loge.afficher();
-                                }
+                                listRechercheLogements.forEach(Logement::afficher);
                             }
                             else
                             {
