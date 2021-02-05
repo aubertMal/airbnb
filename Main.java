@@ -7,6 +7,10 @@ import aubert.airbnb.reservations.*;
 import aubert.airbnb.utilisateurs.Hote;
 import aubert.airbnb.utilisateurs.Voyageur;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class Main {
 
     public static void main(String[] args){
@@ -20,8 +24,6 @@ public class Main {
 
         Appartement appartement = new Appartement(hote,35, "5 résidence des onzes Arpents 37550 Saint-Avertin",55,2, "Appartement",0,5);
 
-        //Date arrivee = Utile.setDateFromString("5/01/2016");
-
         MaDate arrivee = new MaDate("15/05/2021");
 
         System.out.println(arrivee);
@@ -29,6 +31,12 @@ public class Main {
         sejour = SejourFactory.getSejour(arrivee, maison, dureeSejour,4);
 
         Reservation reservation = new Reservation(locataire, true, sejour);
-        reservation.afficher();
+
+        testStream();
+    }
+
+    private static void testStream() {
+        ArrayList<String> listeNoms = new ArrayList(Arrays.asList("Béatrice", "Deamon","Alex", "Bob",  "Courtney", "Eric","Alain"));
+        listeNoms.stream().sorted().forEach(nom -> System.out.println(nom));
     }
 }

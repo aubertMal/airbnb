@@ -13,7 +13,7 @@ public class AirBnBData {
     private ArrayList<Logement> listLogements;
 
     private AirBnBData(){
-        listHotes = new ArrayList<>();;
+        listHotes = new ArrayList<>();
         listVoyageurs = new ArrayList<>();
         listLogements = new ArrayList<>();
     }

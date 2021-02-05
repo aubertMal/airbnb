@@ -6,6 +6,9 @@ import aubert.airbnb.logements.Maison;
 import aubert.airbnb.menu.Menu;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Search {
 
@@ -26,6 +29,47 @@ public class Search {
     }
 
     public ArrayList<Logement> result(){
+        Stream<Logement> stream= Menu.airBnBData.getListLogements().stream();
+
+        return stream.filter(predicateNbVoyageurs())
+                .filter(predicateTarif())
+                .filter(predicatePiscine())
+                .filter(predicateBalcon())
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public Predicate<Logement> predicateNbVoyageurs(){
+        return l -> l.getNbVoyageursMax()>=nbVoyageurs;
+    }
+
+    public Predicate<Logement> predicateTarif(){
+        return l -> l.getTarifParNuit()>=tarifMinParNuit && l.getTarifParNuit()<=tarifMaxParNuit;
+    }
+
+    public Predicate<Logement> predicatePiscine(){
+        return l -> {
+            if (l instanceof Maison){
+                Maison maison = (Maison) l;
+                return((maison.getPossedePiscine() && possedePiscine == 1) || (!maison.getPossedePiscine() && possedePiscine == 0));
+            }
+            else
+                return possedePiscine==0?true:false; //on est sur un appart, si on veut une piscine alors on ne veut pas de ce logement sinon on le garde
+
+        };
+    }
+
+    public Predicate<Logement> predicateBalcon(){
+        return l -> {
+            if (l instanceof Appartement){
+                Appartement appart = (Appartement) l;
+                return((appart.possedeBalcon() && possedeBalcon == 1) || (!appart.possedeBalcon() && possedeBalcon == 0));
+            }
+            else
+                return possedeBalcon==0?true:false; //on est sur une maison donc si on veut un balcon on ne veut pas de ce logement
+        };
+    }
+
+    public ArrayList<Logement> resultOld(){
         ArrayList<Logement> listAParcourir = Menu.airBnBData.getListLogements();
         ArrayList<Logement> listARetourner = (ArrayList<Logement>)listAParcourir.clone();
 
@@ -62,7 +106,7 @@ public class Search {
 
         if (possedePiscine < 2){
             for (Logement logement: listAParcourir) {
-                if (logement.getName().contains("Maison")) {
+                if (logement instanceof Maison) {
                     Maison maison = (Maison) logement;
                     if ((maison.getPossedePiscine() && possedePiscine == 0) || (!maison.getPossedePiscine() && possedePiscine == 1))
                         listARetourner.remove(logement);
@@ -76,7 +120,7 @@ public class Search {
 
         if (possedeJardin < 2){
             for (Logement logement: listAParcourir) {
-                if (logement.getName().contains("Maison")) {
+                if (logement instanceof Maison) {
                     Maison maison = (Maison) logement;
                     if ((maison.possedeJardin() && possedeJardin == 0) || (!maison.possedeJardin() && possedeJardin == 1))
                         listARetourner.remove(logement);
@@ -90,7 +134,7 @@ public class Search {
 
         if (possedeBalcon < 2){
             for (Logement logement: listAParcourir) {
-                if (logement.getName().contains("Appartement")) {
+                if (logement instanceof Appartement) {
                     Appartement appartement = (Appartement) logement;
                     if ((appartement.possedeBalcon() && possedeBalcon == 0) || (!appartement.possedeBalcon() && possedeBalcon == 1))
                         listARetourner.remove(logement);
