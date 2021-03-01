@@ -127,61 +127,67 @@ public class Menu {
         ArrayList<Hote> listHotesTemp = new ArrayList<>();
         ArrayList<Logement> listLogementsTemp = new ArrayList<>();
 
-        //On boucle sur les logements
-        for (int idxLgmt = 0; idxLgmt< nList.getLength(); idxLgmt++) {
-            Node nNode = nList.item(idxLgmt);
+        try {
+            //On boucle sur les logements
+            for (int idxLgmt = 0; idxLgmt < nList.getLength(); idxLgmt++) {
+                Node nNode = nList.item(idxLgmt);
 
-            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
-                Element element = (Element) nNode;
+                    Element element = (Element) nNode;
 
-                Element nodeHote = (Element) element.getElementsByTagName("hote").item(0); // hote
-                String prenom = nodeHote.getElementsByTagName("prenom").item(0).getTextContent();
-                String nom = nodeHote.getElementsByTagName("nom").item(0).getTextContent();
-                int age = Integer.parseInt(nodeHote.getElementsByTagName("age").item(0).getTextContent());
-                int delaiReponse = Integer.parseInt(nodeHote.getElementsByTagName("delaiReponse").item(0).getTextContent());
+                    Element nodeHote = (Element) element.getElementsByTagName("hote").item(0); // hote
+                    String prenom = nodeHote.getElementsByTagName("prenom").item(0).getTextContent();
+                    String nom = nodeHote.getElementsByTagName("nom").item(0).getTextContent();
+                    int age = Integer.parseInt(nodeHote.getElementsByTagName("age").item(0).getTextContent());
+                    int delaiReponse = Integer.parseInt(nodeHote.getElementsByTagName("delaiReponse").item(0).getTextContent());
 
-                Hote newHote = new Hote(prenom, nom, age, delaiReponse);
+                    Hote newHote = new Hote(prenom, nom, age, delaiReponse);
 
-                boolean isPresent = false;
-                for (Hote hote : airBnBData.getListHotes()) {
-                    if (hote.equals(newHote)) {
-                        isPresent = true;
-                        newHote = hote;
-                        break;
+                    boolean isPresent = false;
+                    for (Hote hote : airBnBData.getListHotes()) {
+                        if (hote.equals(newHote)) {
+                            isPresent = true;
+                            newHote = hote;
+                            break;
+                        }
+                    }
+                    if (!isPresent) {
+                        listHotesTemp.add(newHote);
+                    }
+
+                    int tarifParNuit = Integer.parseInt(element.getElementsByTagName("tarifParNuit").item(0).getTextContent());
+                    String adresse = element.getElementsByTagName("adresse").item(0).getTextContent();
+                    int superficie = Integer.parseInt(element.getElementsByTagName("superficie").item(0).getTextContent());
+                    int nbVoyageursMax = Integer.parseInt(element.getElementsByTagName("nbVoyageursMax").item(0).getTextContent());
+
+                    String name = element.getAttribute("name");
+
+                    if (element.getNodeName().equals("Appartement")) {
+                        int numeroEtage = Integer.parseInt(element.getElementsByTagName("numeroEtage").item(0).getTextContent());
+                        int superficieBalcon = Integer.parseInt(element.getElementsByTagName("superficieBalcon").item(0).getTextContent());
+                        Appartement appartement = new Appartement(newHote, tarifParNuit, adresse, superficie, nbVoyageursMax, numeroEtage, superficieBalcon);
+                        appartement.setNom(name);
+                        listLogementsTemp.add(appartement);
+                    }
+
+                    if (element.getNodeName().equals("Maison")) {
+                        int superficieJardin = Integer.parseInt(element.getElementsByTagName("superficieJardin").item(0).getTextContent());
+                        int possedePiscine = Integer.parseInt(element.getElementsByTagName("possedePiscine").item(0).getTextContent());
+                        Maison maison = new Maison(newHote, tarifParNuit, adresse, superficie, nbVoyageursMax, superficieJardin, possedePiscine != 0);
+                        maison.setNom(name);
+                        listLogementsTemp.add(maison);
                     }
                 }
-                if (!isPresent) {
-                    listHotesTemp.add(newHote);
-                }
-
-                int tarifParNuit = Integer.parseInt(element.getElementsByTagName("tarifParNuit").item(0).getTextContent());
-                String adresse = element.getElementsByTagName("adresse").item(0).getTextContent();
-                int superficie = Integer.parseInt(element.getElementsByTagName("superficie").item(0).getTextContent());
-                int nbVoyageursMax = Integer.parseInt(element.getElementsByTagName("nbVoyageursMax").item(0).getTextContent());
-
-                String name = element.getAttribute("name");
-
-                if (element.getNodeName().equals("Appartement")) {
-                    int numeroEtage = Integer.parseInt(element.getElementsByTagName("numeroEtage").item(0).getTextContent());
-                    int superficieBalcon = Integer.parseInt(element.getElementsByTagName("superficieBalcon").item(0).getTextContent());
-                    Appartement appartement = new Appartement(newHote, tarifParNuit, adresse, superficie, nbVoyageursMax, numeroEtage, superficieBalcon);
-                    appartement.setNom(name);
-                    listLogementsTemp.add(appartement);
-                }
-
-                if (element.getNodeName().equals("Maison")) {
-                    int superficieJardin = Integer.parseInt(element.getElementsByTagName("superficieJardin").item(0).getTextContent());
-                    int possedePiscine = Integer.parseInt(element.getElementsByTagName("possedePiscine").item(0).getTextContent());
-                    Maison maison = new Maison(newHote, tarifParNuit, adresse, superficie, nbVoyageursMax, superficieJardin, possedePiscine == 0 ? false : true);
-                    maison.setNom(name);
-                    listLogementsTemp.add(maison);
-                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
-        airBnBData.setListLogements(listLogementsTemp);
-        airBnBData.setListHotes(listHotesTemp);
+        if (listHotesTemp.size()>0)
+            airBnBData.setListHotes(listHotesTemp);
+        if (listLogementsTemp.size()>0)
+            airBnBData.setListLogements(listLogementsTemp);
     }
 
     static void listerMenu(){

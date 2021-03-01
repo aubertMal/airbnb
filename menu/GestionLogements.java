@@ -35,19 +35,14 @@ public class GestionLogements {
         try {
 
             switch (Menu.choix(4)) {
-                case 1:
-                    ajouterLogement();
-                    break;
-                case 2:
-                    supprimerLogement();
-                    break;
-                case 3:
+                case 1 -> ajouterLogement();
+                case 2 -> supprimerLogement();
+                case 3 -> {
                     System.out.println("1: Rechercher par nom");
                     System.out.println("2: Rechercher par critères");
                     System.out.println("3: Annuler");
                     int choixRecherche = Menu.scanner.nextInt();
-
-                    switch (choixRecherche){
+                    switch (choixRecherche) {
                         case 1:
                             System.out.println("Saisir le nom à rechercher");
                             String nomLogement = Menu.scanner.next();
@@ -60,21 +55,17 @@ public class GestionLogements {
                             break;
                         case 2:
                             ArrayList<Logement> listRechercheLogements = rechercheLogementParCritere();
-                            if (listRechercheLogements.size()>0){
+                            if (listRechercheLogements.size() > 0) {
                                 listRechercheLogements.forEach(Logement::afficher);
-                            }
-                            else
-                            {
+                            } else {
                                 System.out.println("Aucun logement ne répond à cette recherche");
                             }
                             break;
                         case 3:
                             break;
                     }
-                    break;
-                case 4:
-                    Menu.listerMenu();
-                    break;
+                }
+                case 4 -> Menu.listerMenu();
             }
 
         } catch (Exception e) {
@@ -88,7 +79,7 @@ public class GestionLogements {
         return search.result();
     }
 
-    private static void ajouterLogement() throws Exception {
+    private static void ajouterLogement() {
 
         System.out.println("-------------------------------------");
         System.out.println("Ajouter un nouveau logement");
@@ -99,19 +90,13 @@ public class GestionLogements {
         System.out.println("3 : Retour");
 
         switch (Menu.choix(3)) {
-            case 1:
-                ajouterUneMaison();
-                break;
-            case 2:
-                ajouterUnAppartement();
-                break;
-            case 3:
-                listerLogements();
-                break;
+            case 1 -> ajouterUneMaison();
+            case 2 -> ajouterUnAppartement();
+            case 3 -> listerLogements();
         }
     }
 
-    private static void ajouterUneMaison() throws Exception {
+    private static void ajouterUneMaison() {
 
         ArrayList<Logement> listLogementsTemps = Menu.airBnBData.getListLogements();
 
@@ -134,8 +119,6 @@ public class GestionLogements {
         int supperficie = Menu.scanner.nextInt();
         System.out.print("Nombre de voyageurs max : ");
         int nbVoyageur = Menu.scanner.nextInt();
-        System.out.print("Nom de la maison : ");
-        String nomMaison = Menu.scanner.next();
         System.out.print("Superficie du jardin : ");
         int superficieJardin = Menu.scanner.nextInt();
         System.out.print("Piscine (0 : non, 1 : oui) : ");
@@ -154,7 +137,7 @@ public class GestionLogements {
         listerLogements();
     }
 
-    private static void ajouterUnAppartement() throws Exception {
+    private static void ajouterUnAppartement() {
         ArrayList<Logement> listLogementsTemp = Menu.airBnBData.getListLogements();
 
         System.out.println("-------------------------------------");
@@ -176,8 +159,6 @@ public class GestionLogements {
         int supperficie = Menu.scanner.nextInt();
         System.out.print("Nombre de voyageurs max : ");
         int nbVoyageur = Menu.scanner.nextInt();
-        System.out.print("Nom de l'appartement : ");
-        String nomAppart = Menu.scanner.next();
         System.out.print("Superficie du balcon : ");
         int superficieBalcon = Menu.scanner.nextInt();
         System.out.print("Numéro de l'étage : ");
@@ -196,7 +177,7 @@ public class GestionLogements {
         listerLogements();
     }
 
-    private static void supprimerLogement() throws Exception {
+    private static void supprimerLogement() {
 
         ArrayList<Logement> listLogementsTemp = Menu.airBnBData.getListLogements();
 

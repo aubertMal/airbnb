@@ -14,11 +14,11 @@ import java.util.stream.Stream;
 public class Search {
 
     int nbVoyageurs;
-    int tarifMinParNuit = 0;
-    int tarifMaxParNuit = 0;
-    int possedePiscine = 3;
-    int possedeJardin = 3;
-    int possedeBalcon = 3;
+    int tarifMinParNuit;
+    int tarifMaxParNuit;
+    int possedePiscine;
+    int possedeJardin;
+    int possedeBalcon;
 
     private Search(SearchBuilder searchBuilder){
         nbVoyageurs = searchBuilder.nbVoyageurs;
@@ -55,7 +55,7 @@ public class Search {
                 return((maison.getPossedePiscine() && possedePiscine == 1) || (!maison.getPossedePiscine() && possedePiscine == 0));
             }
             else
-                return possedePiscine==0?true:false; //on est sur un appart, si on veut une piscine alors on ne veut pas de ce logement sinon on le garde
+                return possedePiscine == 0; //on est sur un appart, si on veut une piscine alors on ne veut pas de ce logement sinon on le garde
 
         };
     }
@@ -67,7 +67,7 @@ public class Search {
                 return((appart.possedeBalcon() && possedeBalcon == 1) || (!appart.possedeBalcon() && possedeBalcon == 0));
             }
             else
-                return possedeBalcon==0?true:false; //on est sur une maison donc si on veut un balcon on ne veut pas de ce logement
+                return possedeBalcon == 0; //on est sur une maison donc si on veut un balcon on ne veut pas de ce logement
         };
     }
 
@@ -94,17 +94,17 @@ public class Search {
         }
 
         public SearchBuilder setPossedePiscine (boolean isPiscine){
-            possedePiscine = isPiscine?1:!isPiscine?0:2;
+            possedePiscine = isPiscine?1:0;
             return this;
         }
 
         public SearchBuilder setPossedeJardin (boolean isJardin){
-            possedeJardin = isJardin?1:!isJardin?0:2;
+            possedeJardin = isJardin?1:0;
             return this;
         }
 
         public SearchBuilder setPossedeBalcon (boolean isBalcon){
-            possedeBalcon = isBalcon?1:!isBalcon?0:2;
+            possedeBalcon = isBalcon?1:0;
             return this;
         }
 
